@@ -1,57 +1,74 @@
-# Simple Port Scanner
+# 🔍 Simple Port Scanner
 
-Python-based multi-threaded port scanner.
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python&logoColor=white)
+![Threads](https://img.shields.io/badge/Threads-200-00ff9c?style=flat-square)
+![Purpose](https://img.shields.io/badge/Purpose-Educational-orange?style=flat-square)
 
-## Features
-- Port scanning
-- Service detection
-- Banner grabbing
-- Multi-threading
+A fast, multi-threaded TCP port scanner written in pure Python. It finds open ports on a target, identifies common services, grabs service banners and exports the results to TXT and CSV.
 
-## Usage
+---
+
+## ✨ Features
+
+- ⚡ **Multi-threaded scanning:** 200 concurrent workers via `ThreadPoolExecutor`
+- 🔎 **Service detection:** maps common ports (FTP, SSH, Telnet, SMTP, DNS, HTTP/S, POP3, IMAP, MySQL, HTTP-ALT)
+- 🏷️ **Banner grabbing:** reads service banners to fingerprint what is running
+- 💾 **Result export:** saves findings to `scan_results.txt` and `scan_results.csv`
+- ⏱️ **Scan timing:** reports total scan duration
+- 📦 **No dependencies:** uses only the Python standard library
+
+---
+
+## 🚀 Usage
+
+```bash
 python main.py
+```
 
-## Disclaimer
-Educational purposes only.
+```text
+Target IP: 192.168.1.10
+Start Port: 1
+End Port: 1000
 
-## 📌 Project Lifecycle
+Scanning 192.168.1.10...
 
-### 1. Idea
-This project was developed to understand the fundamentals of TCP port scanning and basic network reconnaissance techniques. The main goal was to build a simple tool that can detect open ports on a target system.
+[+] 22/tcp OPEN | SSH | SSH-2.0-OpenSSH_8.9p1
+[+] 80/tcp OPEN | HTTP | No banner
 
-### 2. Planning
-Before development, the following features were defined:
-- Scan a target IP address
-- Support port range scanning (e.g. 1–1000)
-- Display open ports clearly
-- Keep the tool lightweight and simple
+[+] Results saved to scan_results.txt and scan_results.csv
 
-Python was chosen as the programming language due to its simplicity and strong networking libraries.
+Scan finished in 6.42 seconds
+```
 
-### 3. Design
-The project was structured around Python’s socket library. A simple modular structure was considered to separate scanning logic and input handling.
+*(Example output; results depend on the target.)*
 
-Basic flow:
-- Take user input (IP + port range)
-- Iterate through ports
-- Try TCP connection using sockets
-- Return open ports
+---
 
-### 4. Development
-The scanner was implemented using Python’s built-in `socket` module. A loop was used to iterate through the specified port range and attempt connections to each port.
+## 🧠 How It Works
 
-### 5. Testing
-The tool was tested on:
-- Localhost (127.0.0.1)
-- Local network devices
+1. Takes the target IP and port range from the user
+2. Sends each port to a thread pool and tries a TCP connection (`connect_ex`)
+3. For open ports, looks up the service name and attempts banner grabbing
+4. Collects the results and writes them to TXT and CSV files
 
-Different port ranges were used to verify accuracy and performance.
+---
 
-### 6. Deployment
-The project was published on GitHub as an open-source repository. A README file was added to explain usage and functionality.
+## 🗺️ Roadmap
 
-### 7. Future Improvements
-- Add multithreading for faster scanning
-- Add service detection (banner grabbing)
-- Export results to file (JSON/TXT)
-- Improve CLI arguments (--host, --ports)
+- [x] Port range scanning
+- [x] Multi-threading
+- [x] Service detection & banner grabbing
+- [x] TXT / CSV export
+- [ ] Command-line arguments (`--host`, `--ports`, `--threads`)
+- [ ] JSON export
+- [ ] UDP scanning
+
+---
+
+## ⚠️ Disclaimer
+
+This tool is for **educational purposes and authorized testing only**. Only scan systems you own or have explicit permission to test.
+
+---
+
+👨‍💻 **Author:** [Arif Köken](https://github.com/ArifKoken80)
